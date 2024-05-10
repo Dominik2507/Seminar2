@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
+using System.Text;
+using System.IO;
 
 public struct TrackedData
 {
@@ -135,18 +137,18 @@ public class TransformDataTracker : MonoBehaviour
         tracking_start_timestamp = Time.time;
     }
 
-    public IEnumerable getData(int count)
+    public IEnumerable GetData(int count)
     {
         if (data.Count < count) return data;
         return data.Skip(data.Count - count);
     }
 
-    public IEnumerable getData(float from, float to)
+    public IEnumerable GetData(float from, float to)
     {
         return data.Where(d => d.timestamp > from && d.timestamp < to);
     }
 
-    public IEnumerable getData(float duration)
+    public IEnumerable GetData(float duration)
     {
         return data.Where(d => d.timestamp <= duration);
     }
@@ -167,21 +169,40 @@ public class TransformDataTracker : MonoBehaviour
         foreach (TrackedData element in data)
         {
 
-            Debug.Log(element.position);
-            Debug.Log(element.rotation);
-
             Vector3 globalPosition = showRelativeTo.transform.position + element.position;
             Quaternion globalRotation = element.rotation * showRelativeTo.transform.rotation;
 
-            Debug.Log(globalPosition);
-            Debug.Log(globalRotation);
-
-            trackedObject.transform.position = globalPosition;
-            trackedObject.transform.rotation = globalRotation;
+            trackedObject.transform.SetPositionAndRotation(globalPosition, globalRotation);
 
             yield return new WaitForFixedUpdate();
         }
        
+    }
+
+    public void ExportData()
+    {
+        string[] headers = { "timestamp", "position", "rotation" };
+        List<string[]> rows = new List<string[]>();
+
+        rows.Add(headers);
+
+        foreach(TrackedData d in data)
+        {
+            rows.Add(new string[] { d.timestamp.ToString(), d.position.ToString(), d.rotation.ToString() });
+        }
+
+        // Generate CSV string
+        StringBuilder sb = new StringBuilder();
+        foreach (string[] row in rows)
+        {
+            sb.AppendLine(string.Join(",", row));
+        }
+
+        // Save CSV data to a file
+        string filePath = Application.dataPath + "/data.csv";
+        File.WriteAllText(filePath, sb.ToString());
+
+        Debug.Log("CSV file saved to: " + filePath);
     }
 
 }

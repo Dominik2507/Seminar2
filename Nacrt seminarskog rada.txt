@@ -1,0 +1,22 @@
+1. Naziv rada
+	Izrada aplikacije za praćenje staze sječiva kod presijecanja 3D objekata u virtualnoj stvarnosti
+
+2. Sažetak rada (barem 100 znakova)
+	Cilj rada je izraditi aplikaciju u virtualnoj realnosti koja omogućuje presjecanje 3D objekata. Aplikacija logira putanju i orijentaciju ruke koja drži virtualnu oštricu. Aplikacija omogućuje izvoz prikupljenih podataka u ovisnosti o vremenu i poziciji u odnosu na virtualni objekt.
+
+3. Ključne riječi (barem jedna)
+	virtualna stvarnost;presjecanje objekata;6dof praćenje
+
+4. Sadržaj (barem 3)
+	1. Uvod
+	2. Pregled područja
+	3. Specifikacija programske potpore
+	4. Implementacija i korisničko sučelje
+	5. Zaključak
+
+5. Literatura (barem jedna)
+	1. Jeff Williams; Gabriel Telles O'Neill; Won-Sook Lee
+	2. Interactive 3D haptic carving using combined voxels and mesh
+	
+	1. Tan Shijie; Zheng Jinjin; Zhou Hongjun
+	2. A Cutting Remesh Method Based on Barycentric Coordinates for 2D Triangulation Mesh
