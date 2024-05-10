@@ -304,16 +304,16 @@ public class MeshToMarchingCubes : MonoBehaviour
                     if (config == 0) continue;
                     if(debugMarchingCubes) Debug.Log(config);
 
-                    float x_0 = x * objectBounding.size.x / (voxelGrid.GetLength(0) - 1) + objectBounding.min.x;
-                    float x_half = (x + 0.5f) * objectBounding.size.x / (voxelGrid.GetLength(0) - 1) + objectBounding.min.x;
-                    float x_1 = (x + 1) * objectBounding.size.x / (voxelGrid.GetLength(0) - 1) + objectBounding.min.x;
-                    float y_0 = y * objectBounding.size.y / (voxelGrid.GetLength(1) - 1) + objectBounding.min.y;
-                    float y_half = (y + 0.5f) * objectBounding.size.y / (voxelGrid.GetLength(1) - 1) + objectBounding.min.y;
-                    float y_1 = (y + 1) * objectBounding.size.y / (voxelGrid.GetLength(1) - 1) + objectBounding.min.y;
+                    float x_0 = (x - 1.5f) * objectBounding.size.x / (voxelGrid.GetLength(0) - 3) + objectBounding.min.x;
+                    float x_half = (x - 1) * objectBounding.size.x / (voxelGrid.GetLength(0) - 3) + objectBounding.min.x;
+                    float x_1 = (x - 0.5f) * objectBounding.size.x / (voxelGrid.GetLength(0) - 3) + objectBounding.min.x;
+                    float y_0 = (y - 1.5f) * objectBounding.size.y / (voxelGrid.GetLength(1) - 3) + objectBounding.min.y;
+                    float y_half = (y - 1) * objectBounding.size.y / (voxelGrid.GetLength(1) - 3) + objectBounding.min.y;
+                    float y_1 = (y - 0.5f) * objectBounding.size.y / (voxelGrid.GetLength(1) - 3) + objectBounding.min.y;
 
-                    float z_0 = z * objectBounding.size.z / (voxelGrid.GetLength(2) - 1) + objectBounding.min.z;
-                    float z_half = (z + 0.5f) * objectBounding.size.z / (voxelGrid.GetLength(2) - 1) + objectBounding.min.z;
-                    float z_1 = (z + 1) * objectBounding.size.z / (voxelGrid.GetLength(2) - 1) + objectBounding.min.z;
+                    float z_0 = (z - 1.5f) * objectBounding.size.z / (voxelGrid.GetLength(2) - 3) + objectBounding.min.z;
+                    float z_half = (z - 1) * objectBounding.size.z / (voxelGrid.GetLength(2) - 3) + objectBounding.min.z;
+                    float z_1 = (z - 0.5f) * objectBounding.size.z / (voxelGrid.GetLength(2) - 3) + objectBounding.min.z;
 
                     int currPoints = foundVertices.Count;
                     #region Defining Faces

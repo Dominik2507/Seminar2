@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
-using System.Text;
-using System.IO;
 
 public struct TrackedData
 {
@@ -78,12 +76,25 @@ public class TransformDataTracker : MonoBehaviour
     private void Update()
     {
         if (isCollectingData) CollectData();
+    }
 
-        if (Keyboard.current.rKey.wasPressedThisFrame)
-        {
-            Debug.Log("R pressed");
-            StartCoroutine(ReplayData());
-        }
+    public void StartRecording()
+    {
+        data.Clear();
+        tracking_start_timestamp = Time.time;
+        isCollectingData = true;
+    }
+
+    public void EndRecording()
+    {
+        isCollectingData = false;
+    }
+
+    public void RestartTracking()
+    {
+        data.Clear();
+        tracking_start_timestamp = Time.time;
+        isCollectingData = true;
     }
 
     public void SubscribeToObject(GameObject go)
@@ -93,8 +104,6 @@ public class TransformDataTracker : MonoBehaviour
         collectRelativeToData = new TrackedData(gameObject, Time.time);
 
         data = new(new TrackedDataComparer());
-        isCollectingData = true;
-        tracking_start_timestamp = Time.time;
     }
 
     public void SubscribeToObject(GameObject go, Transform relativeTo)
@@ -104,8 +113,6 @@ public class TransformDataTracker : MonoBehaviour
         collectRelativeToData = new TrackedData(relativeTo, Time.time);
 
         data = new(new TrackedDataComparer());
-        isCollectingData = true;
-        tracking_start_timestamp = Time.time;
     }
 
     public void SubscribeToObject(GameObject go, GameObject relativeShow)
@@ -115,8 +122,6 @@ public class TransformDataTracker : MonoBehaviour
         collectRelativeToData = new TrackedData(go, Time.time);
 
         data = new(new TrackedDataComparer());
-        isCollectingData = true;
-        tracking_start_timestamp = Time.time;
     }
 
     public void SubscribeToObject(GameObject go, GameObject relativeShow, Transform relativeTo)
@@ -126,15 +131,6 @@ public class TransformDataTracker : MonoBehaviour
         collectRelativeToData = new TrackedData(relativeTo, Time.time);
 
         data = new(new TrackedDataComparer());
-        isCollectingData = true;
-        tracking_start_timestamp = Time.time;
-    }
-
-    public void RestartTracking()
-    {
-        data = new(new TrackedDataComparer());
-        isCollectingData = true;
-        tracking_start_timestamp = Time.time;
     }
 
     public IEnumerable GetData(int count)
@@ -165,7 +161,8 @@ public class TransformDataTracker : MonoBehaviour
     {
         isCollectingData = false;
 
-        
+        Debug.Log("Started replaying motion (" + data.Count + ")");
+
         foreach (TrackedData element in data)
         {
 
@@ -179,30 +176,5 @@ public class TransformDataTracker : MonoBehaviour
        
     }
 
-    public void ExportData()
-    {
-        string[] headers = { "timestamp", "position", "rotation" };
-        List<string[]> rows = new List<string[]>();
-
-        rows.Add(headers);
-
-        foreach(TrackedData d in data)
-        {
-            rows.Add(new string[] { d.timestamp.ToString(), d.position.ToString(), d.rotation.ToString() });
-        }
-
-        // Generate CSV string
-        StringBuilder sb = new StringBuilder();
-        foreach (string[] row in rows)
-        {
-            sb.AppendLine(string.Join(",", row));
-        }
-
-        // Save CSV data to a file
-        string filePath = Application.dataPath + "/data.csv";
-        File.WriteAllText(filePath, sb.ToString());
-
-        Debug.Log("CSV file saved to: " + filePath);
-    }
 
 }

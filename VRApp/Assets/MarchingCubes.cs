@@ -374,9 +374,4 @@ public class MarchingCubes : MonoBehaviour
 
         return 0;
     }
-
-    public static void AddMeshFaces()
-    {
-
-    }
 }
