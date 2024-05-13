@@ -5528,10 +5528,4 @@ public class MeshToMarchingCubes : MonoBehaviour
         generatedMesh.SetIndices(indices.ToArray(), MeshTopology.Triangles, 0);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("TRIGGER, MarchingCubes");
-    }
-
-
 }
